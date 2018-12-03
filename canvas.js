@@ -28,8 +28,8 @@ window.addEventListener("mousemove", function (event) {
 var maxRadius = 60
 var circleAmount = 800
 var startRadius = 10
-var dRdius = 2;
-var eSpeedb = 3;
+var dRdius = 1;
+var eSpeedb = .2;
 
 // comented code is taking collor from specified array
 
@@ -86,7 +86,7 @@ function initOct() {
   for (var i = 0; i < 5; i++) {
     var xS = window.innerWidth / 2
     var yS = window.innerHeight / 2
-    eSpeedb = 5;
+    eSpeedb = .5;
     octArray.push(new octDraw(xS, yS, eSpeedb))
   }
 }
