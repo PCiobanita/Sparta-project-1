@@ -28,7 +28,8 @@ window.addEventListener("mousemove", function (event) {
 var maxRadius = 60
 var circleAmount = 800
 var startRadius = 10
-var dRdius = 0.2;
+var dRdius = 1;
+var eSpeedb = .2;
 
 // comented code is taking collor from specified array
 
@@ -44,15 +45,64 @@ window.addEventListener("resize", function () {
 
 })
 //
+// creating octaagon
+//
+function octDraw(x, y, eSpeedb, ) {
+  this.x = x;
+  this.y = y;
+  this.eSpeedb = eSpeedb;
+
+  this.draw = function () {
+
+    c.beginPath();
+    c.moveTo(this.x - this.eSpeedb, this.y - this.eSpeedb);
+    c.lineTo(this.x, this.y - this.eSpeedb * 2);
+    c.lineTo(this.x + this.eSpeedb * 1.5, this.y - this.eSpeedb * 2);
+    c.lineTo(this.x + this.eSpeedb * 2.5, this.y - this.eSpeedb);
+    c.lineTo(this.x + this.eSpeedb * 2.5, this.y + this.eSpeedb * 0.5);
+    c.lineTo(this.x + this.eSpeedb * 1.5, this.y + this.eSpeedb * 1.5);
+    c.lineTo(this.x, this.y + this.eSpeedb * 1.5);
+    c.lineTo(this.x - this.eSpeedb, this.y + this.eSpeedb * 0.5);
+    c.strokeStyle = "white"
+    c.stroke();
+  }
+  this.update = function () {
+
+    this.eSpeedb = this.eSpeedb + eSpeedb;
+    //inercativity
+    this.draw();
+  }
+
+}
+
+//
+// adding octagon draw to an array
+//
+
+var octArray = [];
+function initOct() {
+  octArray = [];
+
+  for (var i = 0; i < 5; i++) {
+    var xS = window.innerWidth / 2
+    var yS = window.innerHeight / 2
+    eSpeedb = .5;
+    octArray.push(new octDraw(xS, yS, eSpeedb))
+  }
+}
+initOct();
+
+//
 //creating sqares
 //
-function squareDraw(x, y, eSpeed, shape) {
+function squareDraw(x, y, eSpeed, ) {
   this.x = x;
   this.y = y;
   this.eSpeed = eSpeed;
 
   this.draw = function () {
     c.beginPath();
+
     c.moveTo(this.x - this.eSpeed, this.y - this.eSpeed);
     c.lineTo(this.x + this.eSpeed, this.y - this.eSpeed);
     c.lineTo(this.x + this.eSpeed, this.y + this.eSpeed);
@@ -80,7 +130,7 @@ function initSqare() {
   for (var i = 0; i < 5; i++) {
     var xS = window.innerWidth / 2
     var yS = window.innerHeight / 2
-    eSpeed = 0.1;
+    eSpeed = .1;
     sqareArray.push(new squareDraw(xS, yS, eSpeed))
   }
 }
@@ -153,7 +203,7 @@ function init() {
     var y = window.innerHeight / 2
     var dx = (Math.random() - 0.5);
     var dy = (Math.random() - 0.5);
-    circleArray.push(new Circle(x, y, dx, dy, 1, false))
+    circleArray.push(new Circle(x, y, dx, dy, .1, false))
   }
 
 }
@@ -168,6 +218,7 @@ function animate() {
   for (var i = 0; i < circleArray.length; i++) {
     circleArray[i].update();
     sqareArray[i].update();
+    octArray[i].update();
   }
   playerCircle.update();
 
