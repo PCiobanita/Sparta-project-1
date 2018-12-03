@@ -6,6 +6,7 @@ var c = canvas.getContext("2d")
 
 
 
+
 // mosue object
 
 var mouse = {
@@ -20,7 +21,6 @@ const player = {};
 window.addEventListener("mousemove", function (event) {
   mouse.x = event.x
   mouse.y = event.y
-  console.log(mouse)
 })
 
 //variables for circle
@@ -28,7 +28,7 @@ window.addEventListener("mousemove", function (event) {
 var maxRadius = 60
 var circleAmount = 800
 var startRadius = 10
-var dRdius = 1;
+var dRdius = 0.2;
 
 // comented code is taking collor from specified array
 
@@ -43,6 +43,76 @@ window.addEventListener("resize", function () {
   init();
 
 })
+//
+//creating sqares
+//
+function squareDraw(x, y, eSpeed, shape) {
+  this.x = x;
+  this.y = y;
+  this.eSpeed = eSpeed;
+
+  this.draw = function () {
+    c.beginPath();
+    c.moveTo(this.x - this.eSpeed, this.y - this.eSpeed);
+    c.lineTo(this.x + this.eSpeed, this.y - this.eSpeed);
+    c.lineTo(this.x + this.eSpeed, this.y + this.eSpeed);
+    c.lineTo(this.x - this.eSpeed, this.y + this.eSpeed);
+    c.strokeStyle = "white"
+    c.stroke();
+  }
+  this.update = function () {
+
+    this.eSpeed = this.eSpeed + eSpeed;
+    //inercativity
+    this.draw();
+  }
+
+}
+
+//
+//adding squares to an array
+//
+
+var sqareArray = [];
+function initSqare() {
+  sqareArray = [];
+
+  for (var i = 0; i < 5; i++) {
+    var xS = window.innerWidth / 2
+    var yS = window.innerHeight / 2
+    eSpeed = 0.1;
+    sqareArray.push(new squareDraw(xS, yS, eSpeed))
+  }
+}
+initSqare();
+
+//
+// creating circle function with draw and update:
+//
+
+function Circle(x, y, dx, dy, radius) {
+  this.x = x;
+  this.y = y;
+  this.dx = dx;
+  this.dy = dy;
+  this.radius = radius;
+  this.minRad = radius;
+
+  this.draw = function () {
+    c.beginPath();
+    c.arc(this.x, this.y, this.radius, 1, Math.PI * 2, false)
+    c.strokeStyle = "white"
+    c.stroke();
+
+
+  }
+  this.update = function () {
+
+    this.radius = this.radius + dRdius;
+    //inercativity
+    this.draw();
+  }
+}
 
 
 // creating mouse object function;
@@ -66,42 +136,16 @@ function mouseCircle(x, y, dx, dy, radius) {
     this.draw();
   }
 }
+
 // assiging mouse object to a variable
 playerCircle = new mouseCircle(mouse.x, mouse.y, 30, 0, 10, false)
 
-
-// creating arcs:
-function Circle(x, y, dx, dy, radius) {
-  this.x = x;
-  this.y = y;
-  this.dx = dx;
-  this.dy = dy;
-  this.radius = radius;
-  this.minRad = radius;
-  this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
-
-  this.draw = function () {
-    c.beginPath();
-    c.arc(this.x, this.y, this.radius, 1, Math.PI * 2, false)
-    c.strokeStyle = "white"
-    c.stroke();
-
-
-  }
-  this.update = function () {
-
-    this.radius = this.radius + dRdius;
-    //inercativity
-    this.draw();
-  }
-}
+//
+//assigning circles to an array
+//
 var circleArray = [];
-
 function init() {
-
   circleArray = [];
-
-
 
   for (var i = 0; i < 5; i++) {
     var radius = Math.random() * startRadius + 3;
@@ -109,31 +153,28 @@ function init() {
     var y = window.innerHeight / 2
     var dx = (Math.random() - 0.5);
     var dy = (Math.random() - 0.5);
-    circleArray.push(new Circle(x, y, dx, dy, 1, false));
+    circleArray.push(new Circle(x, y, dx, dy, 1, false))
   }
-}
 
-setInterval(() => {
-  init()
-}, 1000)
+}
+init()
+//
+// making shapes expand
+//
 
 function animate() {
   requestAnimationFrame(animate)
-
   c.clearRect(0, 0, innerWidth, innerHeight);
-
   for (var i = 0; i < circleArray.length; i++) {
-
     circleArray[i].update();
-
+    sqareArray[i].update();
   }
   playerCircle.update();
+
 }
 
 
-setInterval(() => {
-  animate();
-}, 1000)
 
+animate();
 
 
