@@ -70,11 +70,9 @@ function octDraw(x, y, eSpeedb, ) {
     b1 = (this.y - this.eSpeedb) - (this.y - (this.eSpeedb * 2))
     c1 = Math.sqrt(Math.pow(a1, 2) + Math.pow(b1, 2))
 
-
     a2 = (this.x - this.eSpeedb) - mouse.x
     b2 = (this.y - this.eSpeedb) - mouse.y
     c2 = Math.sqrt(Math.pow(a2, 2) + Math.pow(b2, 2))
-
 
     a3 = (this.x) - mouse.x
     b3 = (this.y - this.eSpeedb * 2) - mouse.y
@@ -85,6 +83,9 @@ function octDraw(x, y, eSpeedb, ) {
     }
 
   }
+
+
+
   this.update = function () {
 
     this.eSpeedb = this.eSpeedb + eSpeedb;
