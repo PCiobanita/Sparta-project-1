@@ -65,6 +65,25 @@ function octDraw(x, y, eSpeedb, ) {
     c.lineTo(this.x - this.eSpeedb, this.y + this.eSpeedb * 0.5);
     c.strokeStyle = "white"
     c.stroke();
+
+    a1 = (this.x - this.eSpeedb) - (this.x)
+    b1 = (this.y - this.eSpeedb) - (this.y - (this.eSpeedb * 2))
+    c1 = Math.sqrt(Math.pow(a1, 2) + Math.pow(b1, 2))
+
+
+    a2 = (this.x - this.eSpeedb) - mouse.x
+    b2 = (this.y - this.eSpeedb) - mouse.y
+    c2 = Math.sqrt(Math.pow(a2, 2) + Math.pow(b2, 2))
+
+
+    a3 = (this.x) - mouse.x
+    b3 = (this.y - this.eSpeedb * 2) - mouse.y
+    c3 = Math.sqrt(Math.pow(a3, 2) + Math.pow(b3, 2))
+
+    if ((c2 + c3 >= c1 - 1) && (c2 + c3 <= c1 + 1)) {
+      console.log("colision hello")
+    }
+
   }
   this.update = function () {
 
@@ -109,6 +128,60 @@ function squareDraw(x, y, eSpeed, ) {
     c.lineTo(this.x - this.eSpeed, this.y + this.eSpeed);
     c.strokeStyle = "white"
     c.stroke();
+
+    a3 = (this.x - this.eSpeed) - (this.x + this.eSpeed)
+    b3 = (this.y - this.eSpeed) - (this.y - this.eSpeed)
+    c3 = Math.sqrt(Math.pow(a3, 2) + Math.pow(b3, 2))
+
+    a6 = (this.x + this.eSpeed) - (this.x + this.eSpeed)
+    b6 = (this.y - this.eSpeed) - (this.y + this.eSpeed)
+    c6 = Math.sqrt(Math.pow(a6, 2) + Math.pow(b6, 2))
+
+    a9 = (this.x + this.eSpeed) - (this.x - this.eSpeed)
+    b9 = (this.y + this.eSpeed) - (this.y + this.eSpeed)
+    c9 = Math.sqrt(Math.pow(a9, 2) + Math.pow(b9, 2))
+
+
+    a1 = (this.x - this.eSpeed) - mouse.x
+    b1 = (this.y - this.eSpeed) - mouse.y
+    c1 = Math.sqrt(Math.pow(a1, 2) + Math.pow(b1, 2))
+
+
+    a2 = (this.x + this.eSpeed) - mouse.x
+    b2 = (this.y - this.eSpeed) - mouse.y
+    c2 = Math.sqrt(Math.pow(a2, 2) + Math.pow(b2, 2))
+
+
+    a4 = (this.x + this.eSpeed) - mouse.x
+    b4 = (this.y - this.eSpeed) - mouse.y
+    c4 = Math.sqrt(Math.pow(a4, 2) + Math.pow(b4, 2))
+    c.beginPath();
+
+
+    a5 = (this.x + this.eSpeed) - mouse.x
+    b5 = (this.y + this.eSpeed) - mouse.y
+    c5 = Math.sqrt(Math.pow(a5, 2) + Math.pow(b5, 2))
+
+
+    a7 = (this.x + this.eSpeed) - mouse.x
+    b7 = (this.y + this.eSpeed) - mouse.y
+    c7 = Math.sqrt(Math.pow(a7, 2) + Math.pow(b7, 2))
+
+
+    a8 = (this.x - this.eSpeed) - mouse.x
+    b8 = (this.y + this.eSpeed) - mouse.y
+    c8 = Math.sqrt(Math.pow(a8, 2) + Math.pow(b8, 2))
+    if ((c1 + c2 >= c3 - 1) && (c1 + c2 <= c3 + 1)) {
+      console.log("colision detected")
+    }
+    if ((c4 + c5 >= c6 - 1) && (c4 + c5 <= c6 + 1)) {
+      console.log("colision detected")
+    }
+    if ((c7 + c8 >= c9 - 1) && (c7 + c8 <= c9 + 1)) {
+      console.log("colision detected")
+    }
+
+
   }
   this.update = function () {
 
