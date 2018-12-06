@@ -3,7 +3,7 @@ canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
 var c = canvas.getContext("2d")
-
+var win = true
 
 
 
@@ -30,6 +30,11 @@ var circleAmount = 800
 var startRadius = 10
 var dRdius = 1;
 var eSpeedb = .2;
+var eSpeed = .05;
+var eSpeedd = .1;
+var eSpeed3 = .4;
+var eSpeed4 = .5;
+var eSpeed5 = .5;
 
 // comented code is taking collor from specified array
 
@@ -45,6 +50,31 @@ window.addEventListener("resize", function () {
 
 })
 //
+//function for collision detection
+//
+
+function colDetection(x1, x2, y1, y2) {
+  dist1x = x1 - mouse.x
+  dist1y = y1 - mouse.y
+  dist1 = Math.sqrt(Math.pow(dist1x, 2) + Math.pow(dist1y, 2))
+
+  dist2x = x2 - mouse.x;
+  dist2y = y2 - mouse.y;
+  dist2 = Math.sqrt(Math.pow(dist2x, 2) + Math.pow(dist2y, 2))
+
+  dist3x = x1 - x2;
+  dist3y = y1 - y2;
+  dist3 = Math.sqrt(Math.pow(dist3x, 2) + Math.pow(dist3y, 2))
+  if ((dist1 + dist2 <= dist3 + .4)) {
+    console.log("colision hello")
+    location.reload()
+  }
+
+
+}
+
+
+//
 // creating octaagon
 //
 function octDraw(x, y, eSpeedb, ) {
@@ -56,35 +86,29 @@ function octDraw(x, y, eSpeedb, ) {
 
     c.beginPath();
     c.moveTo(this.x - this.eSpeedb, this.y - this.eSpeedb);
-    c.lineTo(this.x, this.y - this.eSpeedb * 2);
-    c.lineTo(this.x + this.eSpeedb * 1.5, this.y - this.eSpeedb * 2);
-    c.lineTo(this.x + this.eSpeedb * 2.5, this.y - this.eSpeedb);
-    c.lineTo(this.x + this.eSpeedb * 2.5, this.y + this.eSpeedb * 0.5);
-    c.lineTo(this.x + this.eSpeedb * 1.5, this.y + this.eSpeedb * 1.5);
-    c.lineTo(this.x, this.y + this.eSpeedb * 1.5);
-    c.lineTo(this.x - this.eSpeedb, this.y + this.eSpeedb * 0.5);
+    c.lineTo(this.x, this.y - this.eSpeedb * 2);//2
+    c.lineTo(this.x + this.eSpeedb * 1.5, this.y - this.eSpeedb * 2);//3
+    c.lineTo(this.x + this.eSpeedb * 2.5, this.y - this.eSpeedb);//4
+    c.lineTo(this.x + this.eSpeedb * 2.5, this.y + this.eSpeedb * 0.5);//5
+    c.lineTo(this.x + this.eSpeedb * 1.5, this.y + this.eSpeedb * 1.5);//6
+    c.lineTo(this.x, this.y + this.eSpeedb * 1.5);//7
+    c.lineTo(this.x - this.eSpeedb, this.y + this.eSpeedb * 0.5);//8
     c.strokeStyle = "white"
     c.stroke();
 
-    a1 = (this.x - this.eSpeedb) - (this.x)
-    b1 = (this.y - this.eSpeedb) - (this.y - (this.eSpeedb * 2))
-    c1 = Math.sqrt(Math.pow(a1, 2) + Math.pow(b1, 2))
+    colDetection(this.x - this.eSpeedb, this.x, this.y - this.eSpeedb, this.y - this.eSpeedb * 2);
+    colDetection(this.x, this.x + this.eSpeedb * 1.5, this.y - this.eSpeedb * 2, this.y - this.eSpeedb * 2);
+    colDetection(this.x + this.eSpeedb * 1.5, this.x + this.eSpeedb * 2.5, this.y - this.eSpeedb * 2, this.y - this.eSpeedb);
+    colDetection(this.x + this.eSpeedb * 2.5, this.x + this.eSpeedb * 2.5, this.y - this.eSpeedb, this.y + this.eSpeedb * 0.5);
+    colDetection(this.x + this.eSpeedb * 2.5, this.x + this.eSpeedb * 1.5, this.y + this.eSpeedb * 0.5, this.y + this.eSpeedb * 1.5);
+    colDetection(this.x + this.eSpeedb * 1.5, this.x, this.y + this.eSpeedb * 1.5, this.y + this.eSpeedb * 1.5);
+    colDetection(this.x, this.x - this.eSpeedb, this.y + this.eSpeedb * 1.5, this.y + this.eSpeedb * .5);
 
-
-    a2 = (this.x - this.eSpeedb) - mouse.x
-    b2 = (this.y - this.eSpeedb) - mouse.y
-    c2 = Math.sqrt(Math.pow(a2, 2) + Math.pow(b2, 2))
-
-
-    a3 = (this.x) - mouse.x
-    b3 = (this.y - this.eSpeedb * 2) - mouse.y
-    c3 = Math.sqrt(Math.pow(a3, 2) + Math.pow(b3, 2))
-
-    if ((c2 + c3 >= c1 - 1) && (c2 + c3 <= c1 + 1)) {
-      console.log("colision hello")
-    }
 
   }
+
+
+
   this.update = function () {
 
     this.eSpeedb = this.eSpeedb + eSpeedb;
@@ -94,6 +118,209 @@ function octDraw(x, y, eSpeedb, ) {
 
 }
 
+
+function octDraw2(x, y, eSpeedb) {
+  this.x = x;
+  this.y = y;
+  this.eSpeedb = eSpeedb;
+
+  this.draw = function () {
+
+    c.beginPath();
+    c.moveTo(this.x, this.y - this.eSpeedb * 2);//2
+    c.lineTo(this.x + this.eSpeedb * 1.5, this.y - this.eSpeedb * 2);//3
+    c.lineTo(this.x + this.eSpeedb * 2.5, this.y - this.eSpeedb);//4
+    c.lineTo(this.x + this.eSpeedb * 2.5, this.y + this.eSpeedb * 0.5);//5
+    c.lineTo(this.x + this.eSpeedb * 1.5, this.y + this.eSpeedb * 1.5);//6
+    c.lineTo(this.x, this.y + this.eSpeedb * 1.5);//7
+    c.lineTo(this.x - this.eSpeedb, this.y + this.eSpeedb * 0.5);//8
+    c.lineTo(this.x - this.eSpeedb, this.y - this.eSpeedb);
+    c.strokeStyle = "white"
+    c.stroke();
+
+    colDetection(this.x, this.x + this.eSpeedb * 1.5, this.y - this.eSpeedb * 2, this.y - this.eSpeedb * 2);
+    colDetection(this.x + this.eSpeedb * 1.5, this.x + this.eSpeedb * 2.5, this.y - this.eSpeedb * 2, this.y - this.eSpeedb);
+    colDetection(this.x + this.eSpeedb * 2.5, this.x + this.eSpeedb * 2.5, this.y - this.eSpeedb, this.y + this.eSpeedb * 0.5);
+    colDetection(this.x + this.eSpeedb * 2.5, this.x + this.eSpeedb * 1.5, this.y + this.eSpeedb * 0.5, this.y + this.eSpeedb * 1.5);
+    colDetection(this.x + this.eSpeedb * 1.5, this.x, this.y + this.eSpeedb * 1.5, this.y + this.eSpeedb * 1.5);
+    colDetection(this.x, this.x - this.eSpeedb, this.y + this.eSpeedb * 1.5, this.y + this.eSpeedb * .5);
+    colDetection(this.x - this.eSpeedb, this.x - this.eSpeedb, this.y + this.eSpeedb * 0.5, this.y - this.eSpeedb);
+
+  }
+  this.update = function () {
+    this.eSpeedb = this.eSpeedb + eSpeedb;
+    //inercativity
+    this.draw();
+  }
+}
+
+function octDraw3(x, y, eSpeed3) {
+  this.x = x;
+  this.y = y;
+  this.eSpeed3 = eSpeed3;
+
+  this.draw = function () {
+
+    c.beginPath();
+    c.moveTo(this.x + this.eSpeed3 * 1.5, this.y - this.eSpeed3 * 2);//3
+    c.lineTo(this.x + this.eSpeed3 * 2.5, this.y - this.eSpeed3);//4
+    c.lineTo(this.x + this.eSpeed3 * 2.5, this.y + this.eSpeed3 * 0.5);//5
+    c.lineTo(this.x + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * 1.5);//6
+    c.lineTo(this.x, this.y + this.eSpeed3 * 1.5);//7
+    c.lineTo(this.x - this.eSpeed3, this.y + this.eSpeed3 * 0.5);//8
+    c.lineTo(this.x - this.eSpeed3, this.y - this.eSpeed3);
+    c.lineTo(this.x, this.y - this.eSpeed3 * 2);//2
+    c.strokeStyle = "white"
+    c.stroke();
+
+    colDetection(this.x + this.eSpeed3 * 1.5, this.x + this.eSpeed3 * 2.5, this.y - this.eSpeed3 * 2, this.y - this.eSpeed3);
+    colDetection(this.x + this.eSpeed3 * 2.5, this.x + this.eSpeed3 * 2.5, this.y - this.eSpeed3, this.y + this.eSpeed3 * 0.5);
+    colDetection(this.x + this.eSpeed3 * 2.5, this.x + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * 0.5, this.y + this.eSpeed3 * 1.5);
+    colDetection(this.x + this.eSpeed3 * 1.5, this.x, this.y + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * 1.5);
+    colDetection(this.x, this.x - this.eSpeed3, this.y + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * .5);
+    colDetection(this.x - this.eSpeed3, this.x - this.eSpeed3, this.y + this.eSpeed3 * 0.5, this.y - this.eSpeed3);
+    colDetection(this.x - this.eSpeed3, this.x, this.y - this.eSpeed3, this.y - this.eSpeed3 * 2);
+
+  }
+
+  this.update = function () {
+
+    this.eSpeed3 = this.eSpeed3 + eSpeed3;
+    //inercativity
+    this.draw();
+  }
+
+}
+
+function octDraw4(x, y, eSpeed3) {
+  this.x = x;
+  this.y = y;
+  this.eSpeed3 = eSpeed3;
+
+  this.draw = function () {
+
+    c.beginPath();
+    c.moveTo(this.x + this.eSpeed3 * 2.5, this.y - this.eSpeed3);//4
+    c.lineTo(this.x + this.eSpeed3 * 2.5, this.y + this.eSpeed3 * 0.5);//5
+    c.lineTo(this.x + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * 1.5);//6
+    c.lineTo(this.x, this.y + this.eSpeed3 * 1.5);//7
+    c.lineTo(this.x - this.eSpeed3, this.y + this.eSpeed3 * 0.5);//8
+    c.lineTo(this.x - this.eSpeed3, this.y - this.eSpeed3);
+    c.lineTo(this.x, this.y - this.eSpeed3 * 2);//2
+    c.lineTo(this.x + this.eSpeed3 * 1.5, this.y - this.eSpeed3 * 2);//3
+    c.strokeStyle = "white"
+    c.stroke();
+
+    colDetection(this.x + this.eSpeed3 * 2.5, this.x + this.eSpeed3 * 2.5, this.y - this.eSpeed3, this.y + this.eSpeed3 * 0.5);
+    colDetection(this.x + this.eSpeed3 * 2.5, this.x + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * 0.5, this.y + this.eSpeed3 * 1.5);
+    colDetection(this.x + this.eSpeed3 * 1.5, this.x, this.y + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * 1.5);
+    colDetection(this.x, this.x - this.eSpeed3, this.y + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * .5);
+    colDetection(this.x - this.eSpeed3, this.x - this.eSpeed3, this.y + this.eSpeed3 * 0.5, this.y - this.eSpeed3);
+    colDetection(this.x - this.eSpeed3, this.x, this.y - this.eSpeed3, this.y - this.eSpeed3 * 2);
+    colDetection(this.x, this.x + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * 2, this.y - this.eSpeed3 * 2);
+
+  }
+
+  this.update = function () {
+
+    this.eSpeed3 = this.eSpeed3 + eSpeed3;
+    //inercativity
+    this.draw();
+  }
+
+}
+
+function octDraw5(x, y, eSpeed3) {
+  this.x = x;
+  this.y = y;
+  this.eSpeed3 = eSpeed3;
+
+  this.draw = function () {
+
+    c.beginPath();
+    c.moveTo(this.x + this.eSpeed3 * 2.5, this.y + this.eSpeed3 * 0.5);//5
+    c.lineTo(this.x + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * 1.5);//6
+    c.lineTo(this.x, this.y + this.eSpeed3 * 1.5);//7
+    c.lineTo(this.x - this.eSpeed3, this.y + this.eSpeed3 * 0.5);//8
+    c.lineTo(this.x - this.eSpeed3, this.y - this.eSpeed3);
+    c.lineTo(this.x, this.y - this.eSpeed3 * 2);//2
+    c.lineTo(this.x + this.eSpeed3 * 1.5, this.y - this.eSpeed3 * 2);//3
+    c.lineTo(this.x + this.eSpeed3 * 2.5, this.y - this.eSpeed3);//4
+    c.strokeStyle = "white"
+    c.stroke();
+
+    colDetection(this.x + this.eSpeed3 * 2.5, this.x + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * 0.5, this.y + this.eSpeed3 * 1.5);
+    colDetection(this.x + this.eSpeed3 * 1.5, this.x, this.y + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * 1.5);
+    colDetection(this.x, this.x - this.eSpeed3, this.y + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * .5);
+    colDetection(this.x - this.eSpeed3, this.x - this.eSpeed3, this.y + this.eSpeed3 * 0.5, this.y - this.eSpeed3);
+    colDetection(this.x - this.eSpeed3, this.x, this.y - this.eSpeed3, this.y - this.eSpeed3 * 2);
+    colDetection(this.x, this.x + this.eSpeed3 * 1.5, this.y + this.eSpeed3 * 2, this.y - this.eSpeed3 * 2);
+    colDetection(this.x + this.eSpeed3 * 1.5, this.x + this.eSpeed3 * 2.5, this.y - this.eSpeed3 * 2, this.y - this.eSpeed3);
+
+  }
+
+  this.update = function () {
+
+    this.eSpeed3 = this.eSpeed3 + eSpeed3;
+    //inercativity
+    this.draw();
+  }
+
+}
+
+var oct5Array = [];
+function initOct5() {
+  oct4Array = [];
+
+  for (var i = 0; i < 100; i++) {
+    var xS = window.innerWidth / 2
+    var yS = window.innerHeight / 2
+    eSpeed5 = eSpeed5 + 0.05;
+    oct5Array.push(new octDraw5(xS, yS, eSpeed5))
+  }
+}
+initOct5();
+
+var oct4Array = [];
+function initOct4() {
+  oct4Array = [];
+
+  for (var i = 0; i < 100; i++) {
+    var xS = window.innerWidth / 2
+    var yS = window.innerHeight / 2
+    eSpeed4 = eSpeed4 + 0.5;
+    oct4Array.push(new octDraw4(xS, yS, eSpeed4))
+  }
+}
+initOct4();
+
+
+var oct3Array = [];
+function initOct3() {
+  oct3Array = [];
+
+  for (var i = 0; i < 100; i++) {
+    var xS = window.innerWidth / 2
+    var yS = window.innerHeight / 2
+    eSpeed3 = eSpeed3 + .1;
+    oct3Array.push(new octDraw3(xS, yS, eSpeed3))
+  }
+}
+initOct3();
+
+var oct2Array = [];
+function initOct2() {
+  oct2Array = [];
+
+  for (var i = 0; i < 100; i++) {
+    var xS = window.innerWidth / 2
+    var yS = window.innerHeight / 2
+    eSpeedb = eSpeedb + .5;
+    oct2Array.push(new octDraw2(xS, yS, eSpeedb))
+  }
+}
+initOct2();
+
 //
 // adding octagon draw to an array
 //
@@ -102,10 +329,10 @@ var octArray = [];
 function initOct() {
   octArray = [];
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 100; i++) {
     var xS = window.innerWidth / 2
     var yS = window.innerHeight / 2
-    eSpeedb = .5;
+    eSpeedb = .2;
     octArray.push(new octDraw(xS, yS, eSpeedb))
   }
 }
@@ -114,10 +341,31 @@ initOct();
 //
 //creating sqares
 //
-function squareDraw(x, y, eSpeed, ) {
+
+function container() {
+  c.beginPath();
+
+  c.moveTo(300, 25);
+  c.lineTo(window.innerWidth - 300, 25);
+  c.lineTo(window.innerWidth - 300, window.innerHeight - 25);
+  c.lineTo(300, window.innerHeight - 25);
+  c.lineTo(300, 25);
+  c.strokeStyle = "red"
+  c.stroke();
+
+  colDetection(300, window.innerWidth - 300, 50, 50);
+  colDetection(window.innerWidth - 300, window.innerWidth - 300, 50, window.innerHeight - 25);
+  colDetection(window.innerWidth - 300, 200, window.innerHeight - 25, window.innerHeight - 25);
+  colDetection(300, 300, window.innerHeight - 25, 60);
+
+}
+
+
+function squareDraw(x, y, eSpeed) {
   this.x = x;
   this.y = y;
   this.eSpeed = eSpeed;
+
 
   this.draw = function () {
     c.beginPath();
@@ -129,57 +377,10 @@ function squareDraw(x, y, eSpeed, ) {
     c.strokeStyle = "white"
     c.stroke();
 
-    a3 = (this.x - this.eSpeed) - (this.x + this.eSpeed)
-    b3 = (this.y - this.eSpeed) - (this.y - this.eSpeed)
-    c3 = Math.sqrt(Math.pow(a3, 2) + Math.pow(b3, 2))
+    colDetection(this.x - this.eSpeed, this.x + this.eSpeed, this.y - this.eSpeed, this.y - this.eSpeed);
+    colDetection(this.x + this.eSpeed, this.x + this.eSpeed, this.y - this.eSpeed, this.y + this.eSpeed);
+    colDetection(this.x + this.eSpeed, this.x - this.eSpeed, this.y + this.eSpeed, this.y + this.eSpeed);
 
-    a6 = (this.x + this.eSpeed) - (this.x + this.eSpeed)
-    b6 = (this.y - this.eSpeed) - (this.y + this.eSpeed)
-    c6 = Math.sqrt(Math.pow(a6, 2) + Math.pow(b6, 2))
-
-    a9 = (this.x + this.eSpeed) - (this.x - this.eSpeed)
-    b9 = (this.y + this.eSpeed) - (this.y + this.eSpeed)
-    c9 = Math.sqrt(Math.pow(a9, 2) + Math.pow(b9, 2))
-
-
-    a1 = (this.x - this.eSpeed) - mouse.x
-    b1 = (this.y - this.eSpeed) - mouse.y
-    c1 = Math.sqrt(Math.pow(a1, 2) + Math.pow(b1, 2))
-
-
-    a2 = (this.x + this.eSpeed) - mouse.x
-    b2 = (this.y - this.eSpeed) - mouse.y
-    c2 = Math.sqrt(Math.pow(a2, 2) + Math.pow(b2, 2))
-
-
-    a4 = (this.x + this.eSpeed) - mouse.x
-    b4 = (this.y - this.eSpeed) - mouse.y
-    c4 = Math.sqrt(Math.pow(a4, 2) + Math.pow(b4, 2))
-    c.beginPath();
-
-
-    a5 = (this.x + this.eSpeed) - mouse.x
-    b5 = (this.y + this.eSpeed) - mouse.y
-    c5 = Math.sqrt(Math.pow(a5, 2) + Math.pow(b5, 2))
-
-
-    a7 = (this.x + this.eSpeed) - mouse.x
-    b7 = (this.y + this.eSpeed) - mouse.y
-    c7 = Math.sqrt(Math.pow(a7, 2) + Math.pow(b7, 2))
-
-
-    a8 = (this.x - this.eSpeed) - mouse.x
-    b8 = (this.y + this.eSpeed) - mouse.y
-    c8 = Math.sqrt(Math.pow(a8, 2) + Math.pow(b8, 2))
-    if ((c1 + c2 >= c3 - 1) && (c1 + c2 <= c3 + 1)) {
-      console.log("colision detected")
-    }
-    if ((c4 + c5 >= c6 - 1) && (c4 + c5 <= c6 + 1)) {
-      console.log("colision detected")
-    }
-    if ((c7 + c8 >= c9 - 1) && (c7 + c8 <= c9 + 1)) {
-      console.log("colision detected")
-    }
 
 
   }
@@ -192,22 +393,68 @@ function squareDraw(x, y, eSpeed, ) {
 
 }
 
+function squareDraw2(x, y, eSpeed) {
+  this.x = x;
+  this.y = y;
+  this.eSpeed = eSpeed;
+
+
+  this.draw = function () {
+    c.beginPath();
+
+    c.moveTo(this.x + this.eSpeed, this.y + this.eSpeed);
+    c.lineTo(this.x - this.eSpeed, this.y + this.eSpeed);
+    c.lineTo(this.x - this.eSpeed, this.y - this.eSpeed);
+    c.lineTo(this.x + this.eSpeed, this.y - this.eSpeed);
+    c.strokeStyle = "white"
+    c.stroke();
+
+    colDetection(this.x + this.eSpeed, this.x - this.eSpeed, this.y + this.eSpeed, this.y + this.eSpeed);
+    colDetection(this.x - this.eSpeed, this.x - this.eSpeed, this.y + this.eSpeed, this.y - this.eSpeed);
+    colDetection(this.x - this.eSpeed, this.x + this.eSpeed, this.y - this.eSpeed, this.y - this.eSpeed);
+
+
+
+  }
+  this.update = function () {
+
+    this.eSpeed = this.eSpeed + eSpeed;
+    //inercativity
+    this.draw();
+  }
+}
+
+var square2Array = [];
+function initSqare2() {
+  square2Array = [];
+
+  for (var i = 0; i < 100; i++) {
+    var xS = window.innerWidth / 2
+    var yS = window.innerHeight / 2
+    eSpeedd = eSpeedd + 0.2;
+    square2Array.push(new squareDraw2(xS, yS, eSpeedd))
+  }
+}
+initSqare2()
+
 //
 //adding squares to an array
 //
 
-var sqareArray = [];
+var squareArray = [];
 function initSqare() {
-  sqareArray = [];
+  squareArray = [];
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 100; i++) {
     var xS = window.innerWidth / 2
     var yS = window.innerHeight / 2
-    eSpeed = .1;
-    sqareArray.push(new squareDraw(xS, yS, eSpeed))
+    eSpeed = eSpeed;
+    squareArray.push(new squareDraw(xS, yS, eSpeed))
   }
 }
-initSqare();
+initSqare()
+
+
 
 //
 // creating circle function with draw and update:
@@ -251,6 +498,8 @@ function mouseCircle(x, y, dx, dy, radius) {
     c.beginPath();
     c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
     c.strokeStyle = "white"
+    c.fillStyle = "red"
+    c.fill = "red"
     c.stroke();
   }
   this.update = function () {
@@ -261,7 +510,7 @@ function mouseCircle(x, y, dx, dy, radius) {
 }
 
 // assiging mouse object to a variable
-playerCircle = new mouseCircle(mouse.x, mouse.y, 30, 0, 10, false)
+playerCircle = new mouseCircle(mouse.x, mouse.y, 30, 0, 3, false)
 
 //
 //assigning circles to an array
@@ -284,21 +533,101 @@ init()
 //
 // making shapes expand
 //
+playerCircle.update();
 
+
+
+spawnRate = 1500
+lastSpawn = -1
+var i = 0
+start = Date.now()
+
+let x = 0
 function animate() {
-  requestAnimationFrame(animate)
+  newElement = Date.now()
   c.clearRect(0, 0, innerWidth, innerHeight);
-  for (var i = 0; i < circleArray.length; i++) {
-    circleArray[i].update();
-    sqareArray[i].update();
+  requestAnimationFrame(animate)
+  for (i = x; i >= 0; i--) {
     octArray[i].update();
   }
+  makeElement = newElement - start;
+  if (makeElement > 5000) {
+    x++;
+    start = Date.now()
+    if (x == octArray.length) {
+      x = 0
+    }
+  }
   playerCircle.update();
+}
+
+function animate2() {
+  requestAnimationFrame(animate2)
+  oct2Array[1].update();
+}
+function animate3() {
+  requestAnimationFrame(animate3)
+  squareArray[1].update();
+}
+
+function animate4() {
+  requestAnimationFrame(animate4)
+  octArray[2].update();
+
+}
+function animate5() {
+  requestAnimationFrame(animate5)
+  oct2Array[4].update();
+
+}
+function animate6() {
+  requestAnimationFrame(animate6)
+  square2Array[2].update();
+  oct3Array[0].update();
+
+
+}
+function animate6() {
+  requestAnimationFrame(animate6)
+  oct4Array[0].update();
+  oct5Array[0].update();
 
 }
 
+animate()
+// setTimeout(() => {
+//   animate2()
+// }, 5000)
+// let x = 1
+// setInterval(() => {
+//   animate3()
+//   x++
+// }, 500 * x)
+
+// setTimeout(() => {
+//   animate4()
+//   x++
+// }, 8000)
+
+// setTimeout(() => {
+//   animate5()
+//   x++
+// }, 10000)
+
+// setTimeout(() => {
+//   animate6()
+//   x++
+// }, 12000)
 
 
-animate();
 
+// limit playing space - random player spawn? randomly place mouse somewhere?
+// create function for creating obstacles
+// make it beautiful - maybe obstacles changing colours close to red when user will get close to obstacle? Start page, instructions, score
+// let's keep it black 'n white
+// countdown before playing
+// v2.0.0
 
+// local storage for leaderboards and keeping scores
+// randomizing obstacles
+// adding more unpredictability to the game
