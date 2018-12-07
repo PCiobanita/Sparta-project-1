@@ -385,7 +385,7 @@ var score = 0;
 function drawScore() {
   c.font = "16px Arial";
   c.fillStyle = "white";
-  c.fillText("Score: " + score, 8, 20);
+  c.fillText("Score: " + score, 300, 45);
 }
 var time = 0;
 function countTime(time) {
@@ -394,6 +394,7 @@ function countTime(time) {
   c.fillText(time, innerWidth / 2, innerHeight / 2);
   return time
 }
+
 
 //*********************************************************************************************** */
 // creating and calling functions for constant animation (request animation frame)
@@ -458,7 +459,7 @@ function animate2() {
     oct2Array[i].update();
   }
   makeElement2 = newElement2 - start2;
-  if (makeElement2 > 8000) {
+  if (makeElement2 > 10000) {
     z++;
     score++
     start2 = Date.now()
@@ -477,7 +478,7 @@ function animate3() {
     oct3Array[i].update();
   }
   makeElement3 = newElement3 - start3;
-  if (makeElement3 > 10000) {
+  if (makeElement3 > 11000) {
     x1++;
     score++
     start3 = Date.now()
@@ -533,7 +534,7 @@ setTimeout(() => {
   }, 3000)
   setTimeout(() => {
     animate3()
-  }, 4000)
+  }, 14000)
   setTimeout(() => {
     animate4()
   }, 7000)
