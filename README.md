@@ -21,5 +21,5 @@ In this project I have created a game in which the player has to avoid geometric
 
 ### Learning points
 1. Using canvas: creating objects, shapes, using animation function.
-2. Colission detection evrey frame
+2. Colission detection evrey frame.
 3. Learned how to add velocity on objects and using the velocity with animation frame to create a moving evect.
