@@ -21,5 +21,5 @@ In this project the player has to avoid geometrical shapes, mainly octagons. The
 
 ### Learning points
 1. Using canvas: creating objects, shapes, using animation function.
-2. Collision detection every frame
+2. Collision detection every frame.
 3. Learned how to add velocity on objects and using the velocity with animation frame to create a moving effect.
